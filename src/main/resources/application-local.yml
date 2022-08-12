@@ -1,0 +1,50 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+    locations: classpath:db/migration/{vendor},classpath:db/seed/local # when you want to give test seed, add location test seed too
+
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+
+  kafka:
+    producer:
+      bootstrap-servers: 13.209.250.13:9092
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: 13.209.250.13:9092
+      enable-auto-commit: false
+    listener:
+      ack-mode: manual
+
+app:
+  topic:
+    verification:
+      fail-verify-labeling: fail-verify-labeling
+      success-verify-labeling: success-verify-labeling
+      success-verify-text-label: success-verify-text-label
+    labeled-data:
+      labeling-ocr-bounding-box: labeling-ocr-bounding-box
+
+  batch:
+    chunk-size: 10
+    minimum-amount: 5
+    success-reliability: 0.8
+
