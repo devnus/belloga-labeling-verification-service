@@ -23,10 +23,18 @@ public class EventVerification {
     @AllArgsConstructor
     public static class SuccessVerifyLabeling {
         private DataType dataType;
+        private String labelingUUID;
+    }
+
+    @Builder
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SuccessVerifyTextLabel {
+        private DataType dataType;
         private Long boundingBoxId;
         private Long totalLabelerNum;
-        private Double accuracy;
+        private Double reliability;
         private String textLabel;
-        private String labelingUUID;
     }
 }

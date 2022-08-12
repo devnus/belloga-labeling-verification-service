@@ -22,6 +22,9 @@ public class KafkaTopicConfig {
     @Value(value = "${app.topic.verification.success-verify-labeling}")
     private String SUCCESS_VERIFY_LABELING_TOPIC;
 
+    @Value(value = "${app.topic.verification.success-verify-text-label}")
+    private String SUCCESS_VERIFY_TEXT_LABEL_TOPIC;
+
     @Bean
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
@@ -43,6 +46,13 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic successVerifyLabelingTopic() {
         return TopicBuilder.name(SUCCESS_VERIFY_LABELING_TOPIC)
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+    @Bean
+    public NewTopic successVerifyTextLabelTopic() {
+        return TopicBuilder.name(SUCCESS_VERIFY_TEXT_LABEL_TOPIC)
                 .partitions(1)
                 .replicas(1)
                 .build();

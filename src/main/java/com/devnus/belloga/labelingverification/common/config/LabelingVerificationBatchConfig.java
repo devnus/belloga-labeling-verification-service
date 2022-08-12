@@ -96,20 +96,16 @@ public class LabelingVerificationBatchConfig {
                 if(labeledOCRLabeling.getLabeledOCRTextLabel().getVerification() == true) { //해당 라벨링이 신뢰성있다고 판단되었을때
 
                     EventVerification.SuccessVerifyLabeling event = EventVerification.SuccessVerifyLabeling.builder()
-                            .labelingUUID(labeledOCRLabeling.getLabelingUUID())
-                            .accuracy((double) labeledOCRLabeling.getLabeledOCRTextLabel().getLabeledCount() / (double) labeledOCRLabeling.getLabeledOCRTextLabel().getLabeledOCRBoundingBox().getLabeledCount()) //여기에 정확성 저장하자
-                            .boundingBoxId(labeledOCRLabeling.getLabeledOCRTextLabel().getLabeledOCRBoundingBox().getOcrBoundingBoxId())
-                            .textLabel(labeledOCRLabeling.getLabeledOCRTextLabel().getTextLabel())
                             .dataType(DataType.OCR)
-                            .totalLabelerNum(labeledOCRLabeling.getLabeledOCRTextLabel().getLabeledOCRBoundingBox().getLabeledCount())
+                            .labelingUUID(labeledOCRLabeling.getLabelingUUID())
                             .build();
 
                     verificationProducer.successVerifyLabeling(event);
                 } else { //해당 라벨링이 신뢰없다고 판단되었을때
 
                     EventVerification.FailVerifyLabeling event = EventVerification.FailVerifyLabeling.builder()
-                            .labelingUUID(labeledOCRLabeling.getLabelingUUID())
                             .dataType(DataType.OCR)
+                            .labelingUUID(labeledOCRLabeling.getLabelingUUID())
                             .build();
 
                     verificationProducer.failVerifyLabeling(event);
