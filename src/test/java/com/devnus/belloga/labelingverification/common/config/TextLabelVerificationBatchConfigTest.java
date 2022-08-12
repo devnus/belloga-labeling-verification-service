@@ -9,6 +9,7 @@ import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,8 +20,13 @@ import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBatchTest
-@SpringBootTest(classes={TextLabelVerificationBatchConfig.class, BatchTestConfig.class})
+@SpringBootTest(classes={TextLabelVerificationBatchConfig.class, BatchTestConfig.class, KafkaProducerConfig.class, KafkaTopicConfig.class})
 @ActiveProfiles("test")
+@EmbeddedKafka(
+        brokerProperties = {
+                "listeners=PLAINTEXT://localhost:9092"
+        },
+        ports = { 9092 })
 class TextLabelVerificationBatchConfigTest {
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;

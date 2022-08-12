@@ -39,6 +39,7 @@ app:
     verification:
       fail-verify-labeling: fail-verify-labeling
       success-verify-labeling: success-verify-labeling
+      success-verify-text-label: success-verify-text-label
     labeled-data:
       labeling-ocr-bounding-box: labeling-ocr-bounding-box
 

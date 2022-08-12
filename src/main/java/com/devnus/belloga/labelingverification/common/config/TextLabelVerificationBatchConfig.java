@@ -1,6 +1,9 @@
 package com.devnus.belloga.labelingverification.common.config;
 
+import com.devnus.belloga.labelingverification.verification.domain.DataType;
 import com.devnus.belloga.labelingverification.verification.domain.LabeledOCRTextLabel;
+import com.devnus.belloga.labelingverification.verification.dto.EventVerification;
+import com.devnus.belloga.labelingverification.verification.event.VerificationProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -26,6 +29,8 @@ public class TextLabelVerificationBatchConfig {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
+
+    private final VerificationProducer verificationProducer;
 
     @Value(value = "${app.batch.chunk-size}")
     private int CHUNK_SIZE;
@@ -99,8 +104,18 @@ public class TextLabelVerificationBatchConfig {
                 //신뢰도 계산
                 double reliability = ((double) labeledOCRTextLabel.getLabeledCount() / (double) labeledOCRTextLabel.getLabeledOCRBoundingBox().getLabeledCount());
 
-                if(reliability >= SUCCESS_RELIABILITY) { //신뢰도가 80프로 이상일때
+                if(reliability >= SUCCESS_RELIABILITY) { //신뢰도가 SUCCESS_RELIABILITY 이상일때
+
+                    EventVerification.SuccessVerifyTextLabel event = EventVerification.SuccessVerifyTextLabel.builder()
+                            .reliability(reliability) //정확성
+                            .boundingBoxId(labeledOCRTextLabel.getLabeledOCRBoundingBox().getOcrBoundingBoxId())
+                            .textLabel(labeledOCRTextLabel.getTextLabel())
+                            .dataType(DataType.OCR)
+                            .totalLabelerNum(labeledOCRTextLabel.getLabeledCount())
+                            .build();
+
                     labeledOCRTextLabel.successVerification();
+                    verificationProducer.successVerifyTextLabel(event);
                 } else { //신뢰도가 80프로 이하일때
                     labeledOCRTextLabel.failVerification();
                 }
