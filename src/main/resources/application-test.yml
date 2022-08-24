@@ -30,9 +30,7 @@ spring:
     consumer:
       auto-offset-reset: earliest
       bootstrap-servers: localhost:9092
-      enable-auto-commit: false
-    listener:
-      ack-mode: manual
+      enable-auto-commit: true
 
 app:
   topic:
