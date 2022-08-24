@@ -16,8 +16,8 @@ public class VerificationConsumer {
      * 사용자가 라벨링을 수행 했을 때 토픽으로 부터 받는 consume
      * group은 협의 후 결정
      */
-    @KafkaListener(topics = "labeling-ocr-bounding-box", groupId = "labeling-ocr-bounding-box-1")
-    protected boolean registerCustomAccountEnterprise(Object event) throws IOException {
-        return verificationService.saveLabeledData((EventLabeledData.LabelingOCRBoundingBox) event);
+    @KafkaListener(topics = "labeling-ocr-bounding-box", groupId = "labeling-ocr-bounding-box-1", containerFactory = "eventLabeledDataLabelingOCRBoundingBoxListener")
+    protected boolean registerCustomAccountEnterprise(EventLabeledData.LabelingOCRBoundingBox event) throws IOException {
+        return verificationService.saveLabeledData(event);
     }
 }
