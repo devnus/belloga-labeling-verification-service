@@ -17,7 +17,7 @@ public class VerificationConsumer {
      * group은 협의 후 결정
      */
     @KafkaListener(topics = "labeling-ocr-bounding-box", groupId = "labeling-ocr-bounding-box-1", containerFactory = "eventLabeledDataLabelingOCRBoundingBoxListener")
-    protected boolean registerCustomAccountEnterprise(EventLabeledData.LabelingOCRBoundingBox event) throws IOException {
+    protected boolean registerLabelingOCRBoundingBox(EventLabeledData.LabelingOCRBoundingBox event) throws IOException {
         return verificationService.saveLabeledData(event);
     }
 }
