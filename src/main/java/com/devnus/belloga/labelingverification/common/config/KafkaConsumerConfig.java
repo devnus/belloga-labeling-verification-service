@@ -43,9 +43,14 @@ public class KafkaConsumerConfig {
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
+
     @Bean
     ConsumerFactory<String, EventLabeledData.LabelingOCRBoundingBox> eventLabeledDataLabelingOCRBoundingBoxFactory(){
-        return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), new JsonDeserializer<>(EventLabeledData.LabelingOCRBoundingBox.class));
+        JsonDeserializer<EventLabeledData.LabelingOCRBoundingBox> deserializer = new JsonDeserializer<>(EventLabeledData.LabelingOCRBoundingBox.class);
+        deserializer.setRemoveTypeHeaders(false);
+        deserializer.addTrustedPackages("*");
+        deserializer.setUseTypeMapperForKey(true);
+        return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), deserializer);
     }
 
     @Bean
