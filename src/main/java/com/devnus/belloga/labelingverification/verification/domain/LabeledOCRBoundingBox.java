@@ -22,13 +22,21 @@ public class LabeledOCRBoundingBox {
     @Column(name = "labeled_count")
     private Long labeledCount;
 
+    @Column(name = "verification_finish") //해당 바운딩 박스가 검증이 끝났는지 여부
+    private Boolean verificationFinish;
+
     @Builder
     public LabeledOCRBoundingBox(Long OCRBoundingBoxId) {
         this.ocrBoundingBoxId = OCRBoundingBoxId;
         this.labeledCount = 0L;
+        this.verificationFinish = false;
     }
 
     public void increaseLabeledCount(){
         this.labeledCount++;
+    }
+
+    public void finishVerification() {
+        this.verificationFinish = true;
     }
 }

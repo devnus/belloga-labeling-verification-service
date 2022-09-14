@@ -81,7 +81,7 @@ public class TextLabelVerificationBatchConfig {
         return new JpaPagingItemReaderBuilder<LabeledOCRTextLabel>()
                 .pageSize(CHUNK_SIZE) //chunk size와 같게 하는것 권장
                 .parameterValues(parameterValues)
-                .queryString("SELECT t FROM LabeledOCRTextLabel t join fetch t.labeledOCRBoundingBox b WHERE b.labeledCount >= :amount ORDER BY t.id ASC")
+                .queryString("SELECT t FROM LabeledOCRTextLabel t join fetch t.labeledOCRBoundingBox b WHERE b.labeledCount >= :amount AND b.verificationFinish = false ORDER BY t.id ASC")
                 .entityManagerFactory(entityManagerFactory)
                 .name("textLabelVerificationReader")
                 .build();

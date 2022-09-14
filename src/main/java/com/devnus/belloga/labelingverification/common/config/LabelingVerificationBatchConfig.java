@@ -73,7 +73,8 @@ public class LabelingVerificationBatchConfig {
 
         return new JpaPagingItemReaderBuilder<LabeledOCRLabeling>()
                 .pageSize(10) //chunk size와 같게 하는것 권장
-                .queryString("SELECT l FROM LabeledOCRLabeling l join fetch l.labeledOCRTextLabel t WHERE t.verification IS NOT NULL ORDER BY l.id ASC")
+                //TextLabel이 검증 되었고, Labeling이 검증되지 않은 Labeling select
+                .queryString("SELECT l FROM LabeledOCRLabeling l join fetch l.labeledOCRTextLabel t WHERE t.verification IS NOT NULL AND l.verificationFinish = false ORDER BY l.id ASC")
                 .entityManagerFactory(entityManagerFactory)
                 .name("labelingVerificationReader")
                 .build();
@@ -92,6 +93,8 @@ public class LabelingVerificationBatchConfig {
             public LabeledOCRLabeling process(LabeledOCRLabeling labeledOCRLabeling) throws Exception {
 
                 log.info("jobParameters value : " + date);
+
+                labeledOCRLabeling.finishVerification(); //해당 라벨링에 대한 조사 끝 체크
 
                 if(labeledOCRLabeling.getLabeledOCRTextLabel().getVerification() == true) { //해당 라벨링이 신뢰성있다고 판단되었을때
 
