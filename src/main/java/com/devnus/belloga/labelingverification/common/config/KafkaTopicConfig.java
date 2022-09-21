@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Configuration
 public class KafkaTopicConfig {
-    @Value("${spring.kafka.producer.bootstrap-servers}")
+    @Value("${spring.kafka.bootstrap-servers}")
     private String BOOTSTRAP_SERVERS;
 
     @Value(value = "${app.topic.verification.fail-verify-labeling}")

@@ -32,6 +32,9 @@ dependencies {
 	implementation group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.5.6'
 	implementation 'org.springframework.kafka:spring-kafka'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-sleuth-zipkin', version: '3.1.4'   // zipkin
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '3.1.4'   // sleuth
 }
 
 tasks.named('test') {

@@ -20,7 +20,7 @@ import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBatchTest
-@SpringBootTest(classes={TextLabelVerificationBatchConfig.class, BatchTestConfig.class, KafkaProducerConfig.class, KafkaTopicConfig.class, KafkaConsumerConfig.class})
+@SpringBootTest(classes={TextLabelVerificationBatchConfig.class, BatchTestConfig.class, KafkaTopicConfig.class, KafkaConsumerConfig.class})
 @ActiveProfiles("test")
 @EmbeddedKafka(
         brokerProperties = {
