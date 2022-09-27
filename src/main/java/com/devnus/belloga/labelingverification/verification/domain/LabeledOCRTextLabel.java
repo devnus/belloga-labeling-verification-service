@@ -1,5 +1,6 @@
 package com.devnus.belloga.labelingverification.verification.domain;
 
+import com.devnus.belloga.labelingverification.common.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "labeled_ocr_text_label")
 @Getter
 @NoArgsConstructor
-public class LabeledOCRTextLabel {
+public class LabeledOCRTextLabel extends BaseTimeEntity {
     @Id
     @Column(name = "labeled_ocr_text_label_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,8 @@ CREATE TABLE labeled_ocr_bounding_box (
     labeled_ocr_bounding_box_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     ocr_bounding_box_id BIGINT NOT NULL,
     verification_finish BOOLEAN NOT NULL,
+    created_date TIMESTAMP,
+    last_modified_date TIMESTAMP,
     labeled_count BIGINT NOT NULL
 );
 
@@ -13,6 +15,8 @@ CREATE TABLE labeled_ocr_text_label (
     text_label VARCHAR(255),
     labeled_count BIGINT NOT NULL,
     verification BOOLEAN,
+    created_date TIMESTAMP,
+    last_modified_date TIMESTAMP,
     FOREIGN KEY (labeled_ocr_bounding_box_id) REFERENCES labeled_ocr_bounding_box (labeled_ocr_bounding_box_id)
 );
 
@@ -22,6 +26,8 @@ CREATE TABLE labeled_ocr_labeling (
     labeled_ocr_text_label_id BIGINT NOT NULL,
     labeling_uuid VARCHAR(255) NOT NULL,
     verification_finish BOOLEAN NOT NULL,
+    created_date TIMESTAMP,
+    last_modified_date TIMESTAMP,
     FOREIGN KEY (labeled_ocr_text_label_id) REFERENCES labeled_ocr_text_label (labeled_ocr_text_label_id)
 );
 
