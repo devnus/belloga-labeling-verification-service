@@ -27,7 +27,8 @@ public class VerificationScheduler {
     /**
      * 매일 02시 0분 0초에 텍스트 라벨 신뢰도 검증 실행
      */
-    @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
+    //@Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0/5 0 * * *", zone = "Asia/Seoul") //개발 환경에서 5분마다 검증하도록 설정
     public void executeTextLabelVerificationJob () throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobInstanceAlreadyCompleteException, JobRestartException {
         Map<String, JobParameter> jobParameterMap = new HashMap<>();
 
@@ -56,7 +57,8 @@ public class VerificationScheduler {
     /**
      * 매일 14시 0분 0초에 라벨링(UUID)별 검증 확인
      */
-    @Scheduled(cron = "0 0 14 * * *", zone = "Asia/Seoul")
+    //@Scheduled(cron = "0 0 14 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0/6 0 * * *", zone = "Asia/Seoul") //개발 환경에서 6분마다 검증하도록 설정
     public void executeLabelingVerificationJob () throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobInstanceAlreadyCompleteException, JobRestartException {
         Map<String, JobParameter> jobParameterMap = new HashMap<>();
 
