@@ -26,10 +26,12 @@ public class VerificationScheduler {
 
     /**
      * 매일 02시 0분 0초에 텍스트 라벨 신뢰도 검증 실행
+     * -> 5분마다 검증 실행되도록 설정
      */
     //@Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
-    @Scheduled(cron = "0 0/5 0 * * *", zone = "Asia/Seoul") //개발 환경에서 5분마다 검증하도록 설정
-    public void executeTextLabelVerificationJob () throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobInstanceAlreadyCompleteException, JobRestartException {
+    @Scheduled(cron = "0 0/5 0 * * *", zone = "Asia/Seoul")
+    public void executeVerificationJob () throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobInstanceAlreadyCompleteException, JobRestartException {
+
         Map<String, JobParameter> jobParameterMap = new HashMap<>();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
@@ -38,49 +40,43 @@ public class VerificationScheduler {
 
         jobParameterMap.put("date", new JobParameter(date));
         JobParameters parameters = new JobParameters(jobParameterMap);
-        JobExecution jobExecution = jobLauncher.run(textLabelVerificationJob, parameters);
 
-        while(jobExecution.isRunning()){
+        /**
+         * 텍스트 라벨 신뢰도 검증
+         */
+
+        JobExecution textLabelVerificationJobExecution = jobLauncher.run(textLabelVerificationJob, parameters);
+
+        while(textLabelVerificationJobExecution.isRunning()){
             log.info("Text Label Verification Job is running...");
         }
 
-        log.info("Job Execution: " + jobExecution.getStatus());
-        log.info("Job getJobConfigurationName: " + jobExecution.getJobConfigurationName());
-        log.info("Job getJobId: " + jobExecution.getJobId());
-        log.info("Job getExitStatus: " + jobExecution.getExitStatus());
-        log.info("Job getJobInstance: " + jobExecution.getJobInstance());
-        log.info("Job getStepExecutions: " + jobExecution.getStepExecutions());
-        log.info("Job getLastUpdated: " + jobExecution.getLastUpdated());
-        log.info("Job getFailureExceptions: " + jobExecution.getFailureExceptions());
-    }
+        log.info("TextLabel Verification Execution: " + textLabelVerificationJobExecution.getStatus());
+        log.info("TextLabel Verification getJobConfigurationName: " + textLabelVerificationJobExecution.getJobConfigurationName());
+        log.info("TextLabel Verification getJobId: " + textLabelVerificationJobExecution.getJobId());
+        log.info("TextLabel Verification getExitStatus: " + textLabelVerificationJobExecution.getExitStatus());
+        log.info("TextLabel Verification getJobInstance: " + textLabelVerificationJobExecution.getJobInstance());
+        log.info("TextLabel Verification getStepExecutions: " + textLabelVerificationJobExecution.getStepExecutions());
+        log.info("TextLabel Verification getLastUpdated: " + textLabelVerificationJobExecution.getLastUpdated());
+        log.info("TextLabel Verification getFailureExceptions: " + textLabelVerificationJobExecution.getFailureExceptions());
 
-    /**
-     * 매일 14시 0분 0초에 라벨링(UUID)별 검증 확인
-     */
-    //@Scheduled(cron = "0 0 14 * * *", zone = "Asia/Seoul")
-    @Scheduled(cron = "0 0/6 0 * * *", zone = "Asia/Seoul") //개발 환경에서 6분마다 검증하도록 설정
-    public void executeLabelingVerificationJob () throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobInstanceAlreadyCompleteException, JobRestartException {
-        Map<String, JobParameter> jobParameterMap = new HashMap<>();
+        /**
+         * 라벨링별 신뢰도 검증
+         */
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-        Date time = new Date();
-        String date = simpleDateFormat.format(time);
+        JobExecution labelingVerificationJobExecution = jobLauncher.run(labelingVerificationJob, parameters);
 
-        jobParameterMap.put("date", new JobParameter(date));
-        JobParameters parameters = new JobParameters(jobParameterMap);
-        JobExecution jobExecution = jobLauncher.run(labelingVerificationJob, parameters);
-
-        while(jobExecution.isRunning()){
+        while(labelingVerificationJobExecution.isRunning()){
             log.info("Labeling Verification Job is running...");
         }
 
-        log.info("Job Execution: " + jobExecution.getStatus());
-        log.info("Job getJobConfigurationName: " + jobExecution.getJobConfigurationName());
-        log.info("Job getJobId: " + jobExecution.getJobId());
-        log.info("Job getExitStatus: " + jobExecution.getExitStatus());
-        log.info("Job getJobInstance: " + jobExecution.getJobInstance());
-        log.info("Job getStepExecutions: " + jobExecution.getStepExecutions());
-        log.info("Job getLastUpdated: " + jobExecution.getLastUpdated());
-        log.info("Job getFailureExceptions: " + jobExecution.getFailureExceptions());
+        log.info("Labeling Verification Execution: " + labelingVerificationJobExecution.getStatus());
+        log.info("Labeling Verification getJobConfigurationName: " + labelingVerificationJobExecution.getJobConfigurationName());
+        log.info("Labeling Verification getJobId: " + labelingVerificationJobExecution.getJobId());
+        log.info("Labeling Verification getExitStatus: " + labelingVerificationJobExecution.getExitStatus());
+        log.info("Labeling Verification getJobInstance: " + labelingVerificationJobExecution.getJobInstance());
+        log.info("Labeling Verification getStepExecutions: " + labelingVerificationJobExecution.getStepExecutions());
+        log.info("Labeling Verification getLastUpdated: " + labelingVerificationJobExecution.getLastUpdated());
+        log.info("Labeling Verification getFailureExceptions: " + labelingVerificationJobExecution.getFailureExceptions());
     }
 }

@@ -104,6 +104,11 @@ public class TextLabelVerificationBatchConfig {
                 //신뢰도 계산
                 double reliability = ((double) labeledOCRTextLabel.getLabeledCount() / (double) labeledOCRTextLabel.getLabeledOCRBoundingBox().getLabeledCount());
 
+                log.info("Text Label value : " + labeledOCRTextLabel.getTextLabel());
+                log.info("Text Label bounding Box count : " + labeledOCRTextLabel.getLabeledOCRBoundingBox().getLabeledCount());
+                log.info("Text Label count : " + labeledOCRTextLabel.getLabeledCount());
+                log.info("Text Label reliability : " + reliability);
+
                 if(reliability >= SUCCESS_RELIABILITY) { //신뢰도가 SUCCESS_RELIABILITY 이상일때
 
                     EventVerification.SuccessVerifyTextLabel event = EventVerification.SuccessVerifyTextLabel.builder()
@@ -116,7 +121,7 @@ public class TextLabelVerificationBatchConfig {
 
                     labeledOCRTextLabel.successVerification();
                     verificationProducer.successVerifyTextLabel(event);
-                } else { //신뢰도가 80프로 이하일때
+                } else { //신뢰도가 SUCCESS_RELIABILITY 프로 이하일때
                     labeledOCRTextLabel.failVerification();
                 }
 

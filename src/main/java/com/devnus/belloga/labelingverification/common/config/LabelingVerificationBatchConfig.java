@@ -95,6 +95,8 @@ public class LabelingVerificationBatchConfig {
                 log.info("jobParameters value : " + date);
 
                 labeledOCRLabeling.finishVerification(); //해당 라벨링에 대한 조사 끝 체크
+                log.info("Labeling value : " + labeledOCRLabeling.getLabeledOCRTextLabel().getTextLabel());
+                log.info("Labeling value verification : " + labeledOCRLabeling.getLabeledOCRTextLabel().getVerification());
 
                 if(labeledOCRLabeling.getLabeledOCRTextLabel().getVerification() == true) { //해당 라벨링이 신뢰성있다고 판단되었을때
 
@@ -102,7 +104,6 @@ public class LabelingVerificationBatchConfig {
                             .dataType(DataType.OCR)
                             .labelingUUID(labeledOCRLabeling.getLabelingUUID())
                             .build();
-
                     verificationProducer.successVerifyLabeling(event);
                 } else { //해당 라벨링이 신뢰없다고 판단되었을때
 
@@ -110,7 +111,6 @@ public class LabelingVerificationBatchConfig {
                             .dataType(DataType.OCR)
                             .labelingUUID(labeledOCRLabeling.getLabelingUUID())
                             .build();
-
                     verificationProducer.failVerifyLabeling(event);
                 }
 
