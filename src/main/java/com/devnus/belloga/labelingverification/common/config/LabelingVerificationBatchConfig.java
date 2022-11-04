@@ -105,6 +105,8 @@ public class LabelingVerificationBatchConfig {
                             .labelingUUID(labeledOCRLabeling.getLabelingUUID())
                             .build();
                     verificationProducer.successVerifyLabeling(event);
+
+                    labeledOCRLabeling.getLabeledOCRTextLabel().getLabeledOCRBoundingBox().finishVerification(); //해당 바운딩박스의 라벨링 검증은 마무리
                 } else { //해당 라벨링이 신뢰없다고 판단되었을때
 
                     EventVerification.FailVerifyLabeling event = EventVerification.FailVerifyLabeling.builder()
