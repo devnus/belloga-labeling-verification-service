@@ -29,8 +29,10 @@ public class VerificationScheduler {
      * -> 5분마다 검증 실행되도록 설정
      */
     //@Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
-    @Scheduled(cron = "0 0/5 0 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0/5 * * * *", zone = "Asia/Seoul")
     public void executeVerificationJob () throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobInstanceAlreadyCompleteException, JobRestartException {
+
+        log.info("execute Verification Start!");
 
         Map<String, JobParameter> jobParameterMap = new HashMap<>();
 
@@ -78,5 +80,7 @@ public class VerificationScheduler {
         log.info("Labeling Verification getStepExecutions: " + labelingVerificationJobExecution.getStepExecutions());
         log.info("Labeling Verification getLastUpdated: " + labelingVerificationJobExecution.getLastUpdated());
         log.info("Labeling Verification getFailureExceptions: " + labelingVerificationJobExecution.getFailureExceptions());
+
+        log.info("execute Verification Finish!");
     }
 }
