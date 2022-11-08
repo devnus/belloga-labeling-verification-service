@@ -49,8 +49,4 @@ public class LabeledOCRTextLabel extends BaseTimeEntity {
     public void increaseLabeledCount(){
         this.labeledCount++;
     }
-
-    public void finishVerification() {
-        this.labeledOCRBoundingBox.finishVerification(); //해당 바운딩 박스 라벨링의 조사가 끝났음을 확인
-    }
 }

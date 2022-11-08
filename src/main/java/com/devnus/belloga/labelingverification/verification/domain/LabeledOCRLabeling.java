@@ -36,6 +36,5 @@ public class LabeledOCRLabeling extends BaseTimeEntity {
 
     public void finishVerification() {
         this.verificationFinish = true;
-        this.labeledOCRTextLabel.finishVerification(); //해당 바운딩 박스 라벨링의 조사가 끝났음을 확인
     }
 }

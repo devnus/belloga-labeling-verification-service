@@ -73,7 +73,8 @@ public class LabelingVerificationBatchConfig {
 
         return new JpaPagingItemReaderBuilder<LabeledOCRLabeling>()
                 .pageSize(10) //chunk size와 같게 하는것 권장
-                //TextLabel이 검증 되었고, Labeling이 검증되지 않은 Labeling select
+                //기준 1: 해당 라벨링의 텍스트 검증 값이 NULL이 아닌 라벨링 가져오기
+                //기준 2: 해당 라벨링에 대한 검증 여부가 false인 값 가져오기
                 .queryString("SELECT l FROM LabeledOCRLabeling l join fetch l.labeledOCRTextLabel t WHERE t.verification IS NOT NULL AND l.verificationFinish = false ORDER BY l.id ASC")
                 .entityManagerFactory(entityManagerFactory)
                 .name("labelingVerificationReader")
@@ -95,6 +96,7 @@ public class LabelingVerificationBatchConfig {
                 log.info("jobParameters value : " + date);
 
                 labeledOCRLabeling.finishVerification(); //해당 라벨링에 대한 조사 끝 체크
+
                 log.info("Labeling value : " + labeledOCRLabeling.getLabeledOCRTextLabel().getTextLabel());
                 log.info("Labeling value verification : " + labeledOCRLabeling.getLabeledOCRTextLabel().getVerification());
 
@@ -106,7 +108,6 @@ public class LabelingVerificationBatchConfig {
                             .build();
                     verificationProducer.successVerifyLabeling(event);
 
-                    labeledOCRLabeling.getLabeledOCRTextLabel().getLabeledOCRBoundingBox().finishVerification(); //해당 바운딩박스의 라벨링 검증은 마무리
                 } else { //해당 라벨링이 신뢰없다고 판단되었을때
 
                     EventVerification.FailVerifyLabeling event = EventVerification.FailVerifyLabeling.builder()
@@ -114,6 +115,7 @@ public class LabelingVerificationBatchConfig {
                             .labelingUUID(labeledOCRLabeling.getLabelingUUID())
                             .build();
                     verificationProducer.failVerifyLabeling(event);
+
                 }
 
                 return labeledOCRLabeling;
