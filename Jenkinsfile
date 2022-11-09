@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         TIME_ZONE = 'Asia/Seoul'
-        PROFILE = 'local'
+        PROFILE = 'prod'
 
         REPOSITORY_CREDENTIAL_ID = 'gitlab-jenkins-key'
         REPOSITORY_URL = 'git@git.swmgit.org:swm-13-main/13_swm56/belloga-labeling-verification-service.git'
