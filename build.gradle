@@ -23,7 +23,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	runtimeOnly 'com.h2database:h2'
+	testImplementation 'com.h2database:h2'
 	implementation group: 'org.flywaydb', name: 'flyway-core', version: '8.5.5'
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	implementation 'org.springframework.boot:spring-boot-starter-quartz'
@@ -32,6 +32,7 @@ dependencies {
 	implementation group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.5.6'
 	implementation 'org.springframework.kafka:spring-kafka'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
+	implementation 'mysql:mysql-connector-java'
 
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-sleuth-zipkin', version: '3.1.4'   // zipkin
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '3.1.4'   // sleuth
