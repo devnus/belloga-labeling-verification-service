@@ -27,7 +27,7 @@ public class VerificationScheduler {
     /**
      * 매일 02시 0분 0초에 텍스트 라벨 신뢰도 검증 실행
      */
-    @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0/30 * * * *", zone = "Asia/Seoul")
     public void executeVerificationJob () throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobInstanceAlreadyCompleteException, JobRestartException {
 
         log.info("execute Verification Start!");
